@@ -1,0 +1,101 @@
+<!-- Edge case tests -->
+
+<!-- Empty file test -->
+
+<!-- Single word -->
+Hello
+
+<!-- Block with no attributes at all -->
+<!-- wp:paragraph -->
+<p>Simple paragraph</p>
+<!-- /wp:paragraph -->
+
+<!-- Block with empty attributes -->
+<!-- wp:paragraph {} -->
+<p>Paragraph with empty attributes</p>
+<!-- /wp:paragraph -->
+
+<!-- Void block (self-closing) -->
+<!-- wp:separator /-->
+
+<!-- Block with very long content -->
+<!-- wp:paragraph -->
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<!-- /wp:paragraph -->
+
+<!-- Block with Unicode characters -->
+<!-- wp:paragraph -->
+<p>Unicode test: 🚀 ñáéíóú αβγδε العربية 中文 日本語 🎉</p>
+<!-- /wp:paragraph -->
+
+<!-- HTML entities in content -->
+<!-- wp:paragraph -->
+<p>HTML entities: &lt;script&gt;alert('xss')&lt;/script&gt; &amp; &quot;quotes&quot;</p>
+<!-- /wp:paragraph -->
+
+<!-- Block comment with extra whitespace -->
+<!--   wp:paragraph   {"textAlign":"center"}   -->
+<p class="has-text-align-center">Extra whitespace in comment</p>
+<!--   /wp:paragraph   -->
+
+<!-- Block with namespace but no slash -->
+<!-- wp:myplugin -->
+<div>Missing slash in namespace</div>
+<!-- /wp:myplugin -->
+
+<!-- Deeply nested quote structures -->
+<!-- wp:quote -->
+<blockquote class="wp-block-quote">
+    <!-- wp:paragraph -->
+    <p>Outer quote</p>
+    <!-- /wp:paragraph -->
+    
+    <!-- wp:quote -->
+    <blockquote class="wp-block-quote">
+        <!-- wp:paragraph -->
+        <p>Inner quote</p>
+        <!-- /wp:paragraph -->
+    </blockquote>
+    <!-- /wp:quote -->
+</blockquote>
+<!-- /wp:quote -->
+
+<!-- Mixed valid and invalid nesting -->
+<!-- wp:columns -->
+<div class="wp-block-columns">
+    <!-- wp:column -->
+    <div class="wp-block-column">
+        <!-- wp:paragraph -->
+        <p>Valid content</p>
+        <!-- /wp:paragraph -->
+        
+        <!-- wp:social-link -->
+        <!-- Invalid: social-link should be inside social-links -->
+        <a href="#" class="wp-block-social-link-anchor">Invalid placement</a>
+        <!-- /wp:social-link -->
+    </div>
+    <!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- Block with attributes containing newlines -->
+<!-- wp:code {"content":"function test() {\n    return 'hello world';\n}"} -->
+<pre class="wp-block-code"><code>function test() {
+    return 'hello world';
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- Comment inside block comment (invalid) -->
+<!-- wp:paragraph <!-- this is invalid --> -->
+<p>Invalid comment inside block comment</p>
+<!-- /wp:paragraph -->
+
+<!-- Multiple consecutive separators -->
+<!-- wp:separator /-->
+<!-- wp:separator /-->
+<!-- wp:separator /-->
+
+<!-- Block at very end of file without trailing newline -->
+<!-- wp:paragraph -->
+<p>Last block</p>
+<!-- /wp:paragraph -->

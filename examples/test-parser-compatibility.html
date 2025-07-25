@@ -1,0 +1,74 @@
+<!-- Test compatibility with WordPress parser edge cases -->
+
+<!-- Complex nested attributes -->
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","right":"2rem","bottom":"2rem","left":"2rem"}},"color":{"background":"#f0f0f0"},"elements":{"link":{"color":{"text":"var:preset|color|primary"}}}},"backgroundColor":"white","textColor":"black"} -->
+<div class="wp-block-group has-black-color has-white-background-color has-text-color has-background">
+    <!-- wp:paragraph -->
+    <p>Complex styling</p>
+    <!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- Escaped quotes in JSON -->
+<!-- wp:paragraph {"content":"This has \"escaped quotes\" in it"} -->
+<p>This has "escaped quotes" in it</p>
+<!-- /wp:paragraph -->
+
+<!-- Block with regex-problematic characters -->
+<!-- wp:code {"content":"const regex = /[a-z]+/gi;"} -->
+<pre class="wp-block-code"><code>const regex = /[a-z]+/gi;</code></pre>
+<!-- /wp:code -->
+
+<!-- Attributes with array values -->
+<!-- wp:gallery {"ids":[1,2,3,4,5],"columns":3,"linkTo":"none"} -->
+<figure class="wp-block-gallery has-nested-images columns-3 is-cropped">
+    <!-- wp:image {"id":1} -->
+    <figure class="wp-block-image"><img src="image1.jpg" alt=""/></figure>
+    <!-- /wp:image -->
+    
+    <!-- wp:image {"id":2} -->
+    <figure class="wp-block-image"><img src="image2.jpg" alt=""/></figure>
+    <!-- /wp:image -->
+</figure>
+<!-- /wp:gallery -->
+
+<!-- Block with boolean false value -->
+<!-- wp:image {"id":123,"linkDestination":"none","sizeSlug":"large","linkTarget":"","rel":"","linkClass":"","linkDestination":"none"} -->
+<figure class="wp-block-image size-large">
+    <img src="image.jpg" alt="" />
+</figure>
+<!-- /wp:image -->
+
+<!-- Freeform HTML before block -->
+<p>This is freeform HTML content that appears before a block.</p>
+
+<!-- wp:paragraph -->
+<p>This is a block paragraph.</p>
+<!-- /wp:paragraph -->
+
+More freeform content here.
+
+<!-- Block with null values -->
+<!-- wp:post-featured-image {"aspectRatio":"16/9","scale":"cover","dimRatio":null} -->
+<div class="wp-block-post-featured-image">
+    <img src="featured.jpg" style="aspect-ratio:16/9;object-fit:cover" alt="" />
+</div>
+<!-- /wp:post-featured-image -->
+
+<!-- Self-closing blocks -->
+<!-- wp:nextpage /-->
+<!-- wp:more /-->
+
+<!-- Block with very specific namespace format -->
+<!-- wp:my-plugin-name/my-block-name {"customAttribute":"value"} -->
+<div class="wp-block-my-plugin-name-my-block-name">Custom block content</div>
+<!-- /wp:my-plugin-name/my-block-name -->
+
+<!-- Block comment edge case: attributes with }} -->
+<!-- wp:paragraph {"content":"This has }} double braces"} -->
+<p>This has }} double braces</p>
+<!-- /wp:paragraph -->
+
+<!-- Incomplete block at end (no closing comment) -->
+<!-- wp:paragraph -->
+<p>This paragraph has no closing block comment...</p>

@@ -257,6 +257,9 @@ class BlockLinter {
             'validate_json' => true,
             'check_empty_blocks' => true,
             'validate_namespaces' => true,
+            'validate_parent_child_relationships' => true,
+            'validate_context_usage' => true,
+            'check_malformed_json' => true,
             'core_blocks' => array(
                 'core/paragraph', 'core/heading', 'core/list', 'core/quote',
                 'core/image', 'core/gallery', 'core/video', 'core/audio',
@@ -272,7 +275,41 @@ class BlockLinter {
                 'core/query', 'core/post-template', 'core/post-title',
                 'core/post-content', 'core/post-excerpt', 'core/post-featured-image',
                 'core/post-date', 'core/post-author', 'core/post-terms',
-                'core/loginout', 'core/social-links', 'core/social-link'
+                'core/loginout', 'core/social-links', 'core/social-link',
+                'core/navigation-submenu', 'core/comments', 'core/comment-template',
+                'core/comment-author-name', 'core/comment-date', 'core/comment-content',
+                'core/comment-reply-link', 'core/comments-title', 'core/comments-pagination',
+                'core/comments-pagination-previous', 'core/comments-pagination-numbers',
+                'core/comments-pagination-next', 'core/post-comments-form',
+                'core/query-pagination', 'core/query-pagination-previous',
+                'core/query-pagination-numbers', 'core/query-pagination-next',
+                'core/query-no-results', 'core/query-title', 'core/term-description',
+                'core/archive-title', 'core/cover', 'core/template-part', 'core/pattern',
+                'core/widget-area', 'core/legacy-widget', 'core/avatar'
+            ),
+            'parent_child_relationships' => array(
+                'core/column' => array('core/columns'),
+                'core/navigation-link' => array('core/navigation', 'core/navigation-submenu'),
+                'core/navigation-submenu' => array('core/navigation'),
+                'core/social-link' => array('core/social-links'),
+                'core/button' => array('core/buttons'),
+                'core/post-template' => array('core/query'),
+                'core/query-pagination' => array('core/query'),
+                'core/query-pagination-previous' => array('core/query-pagination'),
+                'core/query-pagination-numbers' => array('core/query-pagination'),
+                'core/query-pagination-next' => array('core/query-pagination'),
+                'core/query-no-results' => array('core/query'),
+                'core/comment-template' => array('core/comments'),
+                'core/comment-author-name' => array('core/comment-template'),
+                'core/comment-date' => array('core/comment-template'),
+                'core/comment-content' => array('core/comment-template'),
+                'core/comment-reply-link' => array('core/comment-template'),
+                'core/comments-pagination' => array('core/comments'),
+                'core/comments-pagination-previous' => array('core/comments-pagination'),
+                'core/comments-pagination-numbers' => array('core/comments-pagination'),
+                'core/comments-pagination-next' => array('core/comments-pagination'),
+                'core/post-comments-form' => array('core/comments'),
+                'core/comments-title' => array('core/comments')
             )
         );
     }
@@ -308,26 +345,35 @@ class BlockLinter {
 
         // Run validation rules
         $this->validateBlockCount($blocks);
-        $this->validateBlocks($blocks, 0);
+        $this->validateBlocks($blocks, 0, array());
         $this->checkForUnclosedBlocks($content);
         $this->checkForOrphanedClosers($content);
+        
+        // Check for malformed JSON attributes
+        if ($this->config['check_malformed_json']) {
+            $this->checkMalformedJSON($content);
+        }
 
         return empty($this->errors);
     }
 
-    private function validateBlocks($blocks, $depth) {
+    private function validateBlocks($blocks, $depth, $parent_blocks = array()) {
         foreach ($blocks as $block) {
             if (!empty($block['blockName'])) {
-                $this->validateBlock($block, $depth);
+                $this->validateBlock($block, $depth, $parent_blocks);
             }
 
             if (!empty($block['innerBlocks'])) {
-                $this->validateBlocks($block['innerBlocks'], $depth + 1);
+                $new_parent_blocks = $parent_blocks;
+                if (!empty($block['blockName'])) {
+                    $new_parent_blocks[] = $block['blockName'];
+                }
+                $this->validateBlocks($block['innerBlocks'], $depth + 1, $new_parent_blocks);
             }
         }
     }
 
-    private function validateBlock($block, $depth) {
+    private function validateBlock($block, $depth, $parent_blocks = array()) {
         // Check nesting depth
         if ($depth > $this->config['max_nesting_depth']) {
             $this->errors[] = array(
@@ -351,11 +397,29 @@ class BlockLinter {
             $this->checkEmptyBlock($block);
         }
 
+        // Validate parent-child relationships
+        if ($this->config['validate_parent_child_relationships']) {
+            $this->validateParentChildRelationship($block['blockName'], $parent_blocks);
+        }
+
         // Validate specific block types
         $this->validateSpecificBlockType($block);
     }
 
     private function validateBlockName($blockName) {
+        // Validate namespace format first
+        if ($this->config['validate_namespaces']) {
+            // Check for invalid characters or format
+            if (!preg_match('/^[a-z][a-z0-9-]*(\/[a-z][a-z0-9-]*)?$/', $blockName)) {
+                $this->errors[] = array(
+                    'type' => 'invalid_block_name',
+                    'message' => "Invalid block name format: '$blockName'",
+                    'block' => $blockName
+                );
+                return; // Skip further validation for invalid names
+            }
+        }
+
         // Check allowed/forbidden blocks
         if (!empty($this->config['allowed_blocks']) && !in_array($blockName, $this->config['allowed_blocks'])) {
             $this->errors[] = array(
@@ -371,17 +435,6 @@ class BlockLinter {
                 'message' => "Block '$blockName' is forbidden",
                 'block' => $blockName
             );
-        }
-
-        // Validate namespace format
-        if ($this->config['validate_namespaces']) {
-            if (!preg_match('/^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/', $blockName)) {
-                $this->errors[] = array(
-                    'type' => 'invalid_block_name',
-                    'message' => "Invalid block name format: '$blockName'",
-                    'block' => $blockName
-                );
-            }
         }
 
         // Warn about unknown blocks
@@ -454,8 +507,11 @@ class BlockLinter {
     }
 
     private function checkEmptyBlock($block) {
-        $has_content = !empty($block['innerHTML']) || !empty($block['innerBlocks']);
+        // Check if block has meaningful content
+        $innerHTML = trim(strip_tags($block['innerHTML']));
+        $has_content = !empty($innerHTML) || !empty($block['innerBlocks']);
         
+        // Spacer and separator are allowed to be empty
         if (!$has_content && !in_array($block['blockName'], array('core/spacer', 'core/separator'))) {
             $this->warnings[] = array(
                 'type' => 'empty_block',
@@ -592,6 +648,55 @@ class BlockLinter {
         }
 
         return implode("\n", $output);
+    }
+
+    private function validateParentChildRelationship($blockName, $parentBlocks) {
+        if (!isset($this->config['parent_child_relationships'][$blockName])) {
+            return; // No specific parent requirements
+        }
+        
+        $requiredParents = $this->config['parent_child_relationships'][$blockName];
+        $hasValidParent = false;
+        
+        foreach ($parentBlocks as $parent) {
+            if (in_array($parent, $requiredParents)) {
+                $hasValidParent = true;
+                break;
+            }
+        }
+        
+        if (!$hasValidParent) {
+            $this->errors[] = array(
+                'type' => 'invalid_parent_child_relationship',
+                'message' => "Block '$blockName' requires a parent block of type: " . implode(', ', $requiredParents),
+                'block' => $blockName,
+                'required_parents' => $requiredParents,
+                'current_parents' => $parentBlocks
+            );
+        }
+    }
+
+    private function checkMalformedJSON($content) {
+        // Look for block comment patterns with attributes
+        preg_match_all('/<!-- wp:[a-z][a-z0-9_-]*(?:\/[a-z][a-z0-9_-]*)?\s+({[^}]*})\s*(?:\/)?-->/', $content, $matches, PREG_OFFSET_CAPTURE);
+        
+        foreach ($matches[1] as $match) {
+            $json_string = $match[0];
+            $position = $match[1];
+            
+            // Try to decode the JSON
+            $decoded = json_decode($json_string, true);
+            
+            if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
+                $this->errors[] = array(
+                    'type' => 'malformed_json_attributes',
+                    'message' => 'Malformed JSON in block attributes: ' . json_last_error_msg(),
+                    'json_error' => json_last_error_msg(),
+                    'position' => $position,
+                    'json_string' => $json_string
+                );
+            }
+        }
     }
 }
 

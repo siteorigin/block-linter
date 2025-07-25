@@ -1,0 +1,161 @@
+<!-- Test file for block context and relationships -->
+
+<!-- Query context with proper child blocks -->
+<!-- wp:query {"queryId":1,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"displayLayout":{"type":"list","columns":3}} -->
+<div class="wp-block-query">
+    <!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+    <!-- wp:post-title {"level":2,"isLink":true} /-->
+    
+    <!-- wp:post-date {"format":"F j, Y"} /-->
+    
+    <!-- wp:post-excerpt {"moreText":"Read more"} /-->
+    
+    <!-- wp:post-author {"showAvatar":true,"showBio":false} /-->
+    
+    <!-- wp:post-terms {"term":"category"} /-->
+    
+    <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9"} /-->
+    <!-- /wp:post-template -->
+    
+    <!-- wp:query-pagination -->
+    <!-- wp:query-pagination-previous {"label":"Previous"} /-->
+    <!-- wp:query-pagination-numbers /-->
+    <!-- wp:query-pagination-next {"label":"Next"} /-->
+    <!-- /wp:query-pagination -->
+    
+    <!-- wp:query-no-results -->
+    <!-- wp:paragraph -->
+    <p>No posts found.</p>
+    <!-- /wp:paragraph -->
+    <!-- /wp:query-no-results -->
+</div>
+<!-- /wp:query -->
+
+<!-- Post blocks outside query context (should work in post context) -->
+<!-- wp:post-title {"level":1} /-->
+<!-- wp:post-content /-->
+<!-- wp:post-excerpt /-->
+
+<!-- Navigation block with proper children -->
+<!-- wp:navigation {"ref":123,"overlayMenu":"mobile","layout":{"type":"flex","setCascadingProperties":true,"justifyContent":"space-between"}} -->
+<!-- wp:navigation-link {"label":"Home","type":"page","url":"/","kind":"post-type"} /-->
+
+<!-- wp:navigation-submenu {"label":"About","type":"page","url":"/about","kind":"post-type"} -->
+<!-- wp:navigation-link {"label":"Team","type":"page","url":"/team","kind":"post-type"} /-->
+<!-- wp:navigation-link {"label":"History","type":"page","url":"/history","kind":"post-type"} /-->
+<!-- /wp:navigation-submenu -->
+
+<!-- wp:navigation-link {"label":"Contact","type":"page","url":"/contact","kind":"post-type"} /-->
+<!-- /wp:navigation -->
+
+<!-- Site blocks in proper context -->
+<!-- wp:site-title {"level":1,"isLink":false} /-->
+<!-- wp:site-tagline /-->
+<!-- wp:site-logo {"width":120} /-->
+
+<!-- Template part with context -->
+<!-- wp:template-part {"slug":"header","theme":"my-theme","tagName":"header"} /-->
+
+<!-- Block with invalid context usage -->
+<!-- wp:post-template -->
+<!-- This should only be inside query blocks -->
+<!-- wp:paragraph -->
+<p>Invalid: post-template outside query</p>
+<!-- /wp:paragraph -->
+<!-- /wp:post-template -->
+
+<!-- Navigation submenu outside navigation -->
+<!-- wp:navigation-submenu {"label":"Orphaned Submenu"} -->
+<!-- wp:navigation-link {"label":"Child Link"} /-->
+<!-- /wp:navigation-submenu -->
+
+<!-- Query pagination outside query -->
+<!-- wp:query-pagination -->
+<!-- wp:query-pagination-previous /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- Comments block with proper nesting -->
+<!-- wp:comments -->
+<div class="wp-block-comments">
+    <!-- wp:comments-title /-->
+    
+    <!-- wp:comment-template -->
+    <!-- wp:columns -->
+    <div class="wp-block-columns">
+        <!-- wp:column {"width":"40px"} -->
+        <div class="wp-block-column" style="flex-basis:40px">
+            <!-- wp:avatar {"size":40} /-->
+        </div>
+        <!-- /wp:column -->
+        
+        <!-- wp:column -->
+        <div class="wp-block-column">
+            <!-- wp:comment-author-name /-->
+            <!-- wp:comment-date /-->
+            <!-- wp:comment-content /-->
+            <!-- wp:comment-reply-link /-->
+        </div>
+        <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+    <!-- /wp:comment-template -->
+    
+    <!-- wp:comments-pagination -->
+    <!-- wp:comments-pagination-previous /-->
+    <!-- wp:comments-pagination-numbers /-->
+    <!-- wp:comments-pagination-next /-->
+    <!-- /wp:comments-pagination -->
+    
+    <!-- wp:post-comments-form /-->
+</div>
+<!-- /wp:comments -->
+
+<!-- Comment blocks outside comments context -->
+<!-- wp:comment-author-name /-->
+<!-- wp:comment-content /-->
+<!-- wp:comment-date /-->
+
+<!-- Block with custom context provider/consumer pattern -->
+<!-- wp:my-plugin/context-provider {"customValue":"test-value","providedData":{"key1":"value1","key2":42}} -->
+<div class="wp-block-my-plugin-context-provider">
+    <!-- wp:my-plugin/context-consumer -->
+    <div class="wp-block-my-plugin-context-consumer">
+        <p>This block consumes context from parent</p>
+    </div>
+    <!-- /wp:my-plugin/context-consumer -->
+    
+    <!-- wp:my-plugin/context-consumer {"overrideValue":"custom"} -->
+    <div class="wp-block-my-plugin-context-consumer">
+        <p>This block overrides context</p>
+    </div>
+    <!-- /wp:my-plugin/context-consumer -->
+</div>
+<!-- /wp:my-plugin/context-provider -->
+
+<!-- Block pattern with context -->
+<!-- wp:pattern {"slug":"my-theme/hero-section"} /-->
+
+<!-- Reusable block reference -->
+<!-- wp:block {"ref":456} /-->
+
+<!-- Widget area context -->
+<!-- wp:widget-area {"id":"sidebar-1"} -->
+<!-- wp:legacy-widget {"idBase":"text","instance":{"title":"Custom Widget","text":"Widget content"}} /-->
+<!-- /wp:widget-area -->
+
+<!-- Archive blocks in proper context -->
+<!-- wp:query-title {"type":"archive"} /-->
+<!-- wp:term-description /-->
+<!-- wp:archive-title /-->
+
+<!-- Invalid: archive blocks outside archive context -->
+<!-- wp:query-title {"type":"search"} /-->
+<!-- wp:term-description /-->
+
+<!-- Loginout block -->
+<!-- wp:loginout {"displayLoginAsForm":true} /-->
+
+<!-- Calendar block -->
+<!-- wp:calendar {"month":12,"year":2023} /-->

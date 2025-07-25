@@ -16,7 +16,8 @@
         "core/button",
         "core/buttons",
         "core/separator",
-        "core/spacer"
+        "core/spacer",
+        "core/quote"
     ],
     "forbidden_blocks": [
         "core/html",

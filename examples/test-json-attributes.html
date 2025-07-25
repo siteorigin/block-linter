@@ -1,0 +1,69 @@
+<!-- Test file for JSON attribute validation -->
+
+<!-- Valid JSON attributes -->
+<!-- wp:image {"id":123,"url":"https://example.com/image.jpg","alt":"Test image","sizeSlug":"large"} -->
+<figure class="wp-block-image size-large">
+    <img src="https://example.com/image.jpg" alt="Test image" />
+</figure>
+<!-- /wp:image -->
+
+<!-- Malformed JSON - missing closing brace -->
+<!-- wp:heading {"level":2,"textAlign":"center" -->
+<h2 class="has-text-align-center">Malformed JSON Test</h2>
+<!-- /wp:heading -->
+
+<!-- Invalid JSON - trailing comma -->
+<!-- wp:paragraph {"fontSize":"large","dropCap":true,} -->
+<p class="has-large-font-size has-drop-cap">This has invalid JSON</p>
+<!-- /wp:paragraph -->
+
+<!-- Invalid JSON - single quotes instead of double -->
+<!-- wp:button {'backgroundColor':'blue','textColor':'white'} -->
+<div class="wp-block-button">
+    <a class="wp-block-button__link">Button</a>
+</div>
+<!-- /wp:button -->
+
+<!-- Extremely large attributes (testing size limit) -->
+<!-- wp:code {"content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."} -->
+<pre class="wp-block-code"><code>Very long content...</code></pre>
+<!-- /wp:code -->
+
+<!-- Invalid attribute types -->
+<!-- wp:list {"ordered":"yes"} -->
+<ul><li>Should be boolean, not string</li></ul>
+<!-- /wp:list -->
+
+<!-- Nested JSON objects -->
+<!-- wp:media-text {"mediaId":456,"mediaType":"image","mediaPosition":"right","mediaUrl":"https://example.com/image.jpg","mediaAlt":"Alt text","mediaSizeSlug":"full","imageFill":false,"focalPoint":{"x":0.5,"y":0.5},"backgroundColor":"pale-cyan-blue","textColor":"vivid-red"} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile has-pale-cyan-blue-background-color has-vivid-red-color">
+    <figure class="wp-block-media-text__media">
+        <img src="https://example.com/image.jpg" alt="Alt text" />
+    </figure>
+    <div class="wp-block-media-text__content">
+        <p>Media text content</p>
+    </div>
+</div>
+<!-- /wp:media-text -->
+
+<!-- Attributes with special characters -->
+<!-- wp:paragraph {"content":"This \"text\" has <special> characters & entities"} -->
+<p>This "text" has &lt;special&gt; characters &amp; entities</p>
+<!-- /wp:paragraph -->
+
+<!-- Empty attributes object -->
+<!-- wp:separator {} -->
+<hr class="wp-block-separator" />
+<!-- /wp:separator -->
+
+<!-- No attributes at all -->
+<!-- wp:spacer -->
+<div style="height:100px"></div>
+<!-- /wp:spacer -->
+
+<!-- Unescaped JSON in attributes -->
+<!-- wp:html {"content":"<script>alert(\"xss\")</script>"} -->
+<div class="wp-block-html">
+    <script>alert("xss")</script>
+</div>
+<!-- /wp:html -->

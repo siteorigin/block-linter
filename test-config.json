@@ -1,0 +1,11 @@
+{
+    "max_nesting_depth": 2,
+    "max_block_count": 5,
+    "max_attribute_size": 100,
+    "check_empty_blocks": false,
+    "validate_namespaces": false,
+    "validate_parent_child_relationships": false,
+    "check_malformed_json": false,
+    "allowed_blocks": ["core/paragraph", "core/heading"],
+    "forbidden_blocks": ["core/html", "core/shortcode", "core/image"]
+}

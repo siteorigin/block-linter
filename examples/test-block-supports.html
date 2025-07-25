@@ -1,0 +1,125 @@
+<!-- Test file for block supports and variations -->
+
+<!-- Block with extensive supports configuration -->
+<!-- wp:group {"align":"full","layout":{"type":"constrained","contentSize":"1200px"},"style":{"spacing":{"padding":{"top":"2rem","right":"2rem","bottom":"2rem","left":"2rem"},"margin":{"top":"0","bottom":"0"}},"color":{"background":"#f0f0f0","text":"#333333"},"border":{"width":"2px","style":"solid","color":"#cccccc","radius":"8px"},"typography":{"fontSize":"16px","lineHeight":"1.6"}},"className":"custom-group-class"} -->
+<div class="wp-block-group alignfull custom-group-class has-text-color has-background" style="color:#333333;background-color:#f0f0f0;border:2px solid #cccccc;border-radius:8px;margin-top:0;margin-bottom:0;padding:2rem;font-size:16px;line-height:1.6">
+    <!-- wp:paragraph -->
+    <p>Content with extensive block supports</p>
+    <!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- Block variation test - columns with specific layout -->
+<!-- wp:columns {"columns":3,"isStackedOnMobile":true,"align":"wide"} -->
+<div class="wp-block-columns alignwide is-stacked-on-mobile">
+    <!-- wp:column {"width":"33.33%"} -->
+    <div class="wp-block-column" style="flex-basis:33.33%">
+        <!-- wp:paragraph -->
+        <p>Column 1</p>
+        <!-- /wp:paragraph -->
+    </div>
+    <!-- /wp:column -->
+    
+    <!-- wp:column {"width":"33.33%"} -->
+    <div class="wp-block-column" style="flex-basis:33.33%">
+        <!-- wp:paragraph -->
+        <p>Column 2</p>
+        <!-- /wp:paragraph -->
+    </div>
+    <!-- /wp:column -->
+    
+    <!-- wp:column {"width":"33.34%"} -->
+    <div class="wp-block-column" style="flex-basis:33.34%">
+        <!-- wp:paragraph -->
+        <p>Column 3</p>
+        <!-- /wp:paragraph -->
+    </div>
+    <!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- Invalid columns count -->
+<!-- wp:columns {"columns":10} -->
+<div class="wp-block-columns">
+    <!-- wp:column -->
+    <div class="wp-block-column">
+        <p>Too many columns specified</p>
+    </div>
+    <!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- Block with anchor support -->
+<!-- wp:heading {"level":2,"anchor":"custom-anchor-id","style":{"typography":{"textTransform":"uppercase","fontWeight":"700"}}} -->
+<h2 class="wp-block-heading" id="custom-anchor-id" style="font-weight:700;text-transform:uppercase">Heading with Anchor</h2>
+<!-- /wp:heading -->
+
+<!-- Block with color variations -->
+<!-- wp:button {"backgroundColor":"vivid-red","textColor":"white","style":{"border":{"radius":"50px"},"spacing":{"padding":{"top":"1rem","right":"2rem","bottom":"1rem","left":"2rem"}}},"className":"is-style-fill","gradient":"vivid-cyan-blue-to-vivid-purple"} -->
+<div class="wp-block-button is-style-fill">
+    <a class="wp-block-button__link has-white-color has-vivid-red-background-color has-text-color has-background has-vivid-cyan-blue-to-vivid-purple-gradient-background" style="border-radius:50px;padding:1rem 2rem">Styled Button</a>
+</div>
+<!-- /wp:button -->
+
+<!-- Block with duotone filter -->
+<!-- wp:image {"id":789,"sizeSlug":"large","linkDestination":"none","style":{"color":{"duotone":["#000000","#ffffff"]}}} -->
+<figure class="wp-block-image size-large">
+    <img src="https://example.com/image.jpg" alt="" />
+</figure>
+<!-- /wp:image -->
+
+<!-- Block with position support (sticky) -->
+<!-- wp:group {"style":{"position":{"type":"sticky","top":"0px"}},"backgroundColor":"white"} -->
+<div class="wp-block-group has-white-background-color has-background" style="position:sticky;top:0px">
+    <!-- wp:paragraph -->
+    <p>Sticky header content</p>
+    <!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- Block with invalid style variation -->
+<!-- wp:quote {"className":"is-style-invalid-variation"} -->
+<blockquote class="wp-block-quote is-style-invalid-variation">
+    <p>Quote with non-existent style variation</p>
+</blockquote>
+<!-- /wp:quote -->
+
+<!-- Block with aspect ratio support -->
+<!-- wp:embed {"url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
+    <div class="wp-block-embed__wrapper">
+        https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    </div>
+</figure>
+<!-- /wp:embed -->
+
+<!-- Block with layout support - flex -->
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group is-layout-flex">
+    <!-- wp:paragraph -->
+    <p>Flex item 1</p>
+    <!-- /wp:paragraph -->
+    
+    <!-- wp:paragraph -->
+    <p>Flex item 2</p>
+    <!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- Block with minimum height -->
+<!-- wp:cover {"url":"https://example.com/bg.jpg","dimRatio":50,"minHeight":500,"minHeightUnit":"px","contentPosition":"center center","isDark":false} -->
+<div class="wp-block-cover is-light" style="min-height:500px">
+    <span aria-hidden="true" class="wp-block-cover__background has-background-dim"></span>
+    <img class="wp-block-cover__image-background" alt="" src="https://example.com/bg.jpg" />
+    <div class="wp-block-cover__inner-container">
+        <!-- wp:paragraph {"align":"center","fontSize":"large"} -->
+        <p class="has-text-align-center has-large-font-size">Cover Block Content</p>
+        <!-- /wp:paragraph -->
+    </div>
+</div>
+<!-- /wp:cover -->
+
+<!-- Block with custom CSS class and inline styles -->
+<!-- wp:paragraph {"style":{"css":"color: red !important;"},"className":"custom-paragraph-class"} -->
+<p class="custom-paragraph-class" style="color: red !important;">Paragraph with custom CSS</p>
+<!-- /wp:paragraph -->
