@@ -1,0 +1,16 @@
+{
+    "name": "wordpress/block-linter",
+    "description": "Standalone linter for WordPress Gutenberg blocks",
+    "type": "library",
+    "keywords": ["wordpress", "gutenberg", "blocks", "linter", "validator"],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "classmap": ["block-linter.php"]
+    },
+    "bin": ["block-linter.php"],
+    "scripts": {
+        "test": "php block-linter.php -f test-blocks.html"
+    }
+}
