@@ -50,13 +50,13 @@ Create a JSON configuration file to customize validation rules:
 
 ```json
 {
-    "max_nesting_depth": 10,
-    "max_block_count": 1000,
-    "max_attribute_size": 10000,
-    "allowed_blocks": ["core/paragraph", "core/heading"],
-    "forbidden_blocks": ["core/html"],
-    "check_empty_blocks": true,
-    "validate_namespaces": true
+	"max_nesting_depth": 10,
+	"max_block_count": 1000,
+	"max_attribute_size": 10000,
+	"allowed_blocks": ["core/paragraph", "core/heading"],
+	"forbidden_blocks": ["core/html"],
+	"check_empty_blocks": true,
+	"validate_namespaces": true
 }
 ```
 
@@ -131,10 +131,10 @@ Output:
 
 # Check all HTML files for block errors
 for file in $(git diff --cached --name-only | grep '\.html$'); do
-    if ! php block-linter/block-linter.php -f "$file"; then
-        echo "Block validation failed for $file"
-        exit 1
-    fi
+	if ! php block-linter/block-linter.php -f "$file"; then
+		echo "Block validation failed for $file"
+		exit 1
+	fi
 done
 ```
 
@@ -144,7 +144,7 @@ done
 # GitHub Actions example
 - name: Lint WordPress Blocks
   run: |
-    find . -name "*.html" -exec php block-linter/block-linter.php -f {} \;
+	find . -name "*.html" -exec php block-linter/block-linter.php -f {} \;
 ```
 
 ### PHP Integration
@@ -153,15 +153,15 @@ done
 require_once 'block-linter/block-linter.php';
 
 $linter = new BlockLinter([
-    'max_nesting_depth' => 5,
-    'forbidden_blocks' => ['core/html']
+	'max_nesting_depth' => 5,
+	'forbidden_blocks' => ['core/html']
 ]);
 
 $result = $linter->lint($content);
 if (!$result) {
-    $errors = $linter->getErrors();
-    $warnings = $linter->getWarnings();
-    // Handle errors...
+	$errors = $linter->getErrors();
+	$warnings = $linter->getWarnings();
+	// Handle errors...
 }
 ```
 

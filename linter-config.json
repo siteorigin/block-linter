@@ -1,26 +1,26 @@
 {
-    "max_nesting_depth": 5,
-    "max_block_count": 100,
-    "max_attribute_size": 5000,
-    "check_empty_blocks": true,
-    "allowed_blocks": [
-        "core/paragraph",
-        "core/heading",
-        "core/list",
-        "core/list-item",
-        "core/image",
-        "core/gallery",
-        "core/columns",
-        "core/column",
-        "core/group",
-        "core/button",
-        "core/buttons",
-        "core/separator",
-        "core/spacer",
-        "core/quote"
-    ],
-    "forbidden_blocks": [
-        "core/html",
-        "core/shortcode"
-    ]
+	"max_nesting_depth": 5,
+	"max_block_count": 100,
+	"max_attribute_size": 5000,
+	"check_empty_blocks": true,
+	"allowed_blocks": [
+		"core/paragraph",
+		"core/heading",
+		"core/list",
+		"core/list-item",
+		"core/image",
+		"core/gallery",
+		"core/columns",
+		"core/column",
+		"core/group",
+		"core/button",
+		"core/buttons",
+		"core/separator",
+		"core/spacer",
+		"core/quote"
+	],
+	"forbidden_blocks": [
+		"core/html",
+		"core/shortcode"
+	]
 }

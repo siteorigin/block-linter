@@ -3,190 +3,190 @@
 <!-- Valid InnerBlocks structure -->
 <!-- wp:columns -->
 <div class="wp-block-columns">
-    <!-- wp:column -->
-    <div class="wp-block-column">
-        <!-- wp:paragraph -->
-        <p>Valid column content</p>
-        <!-- /wp:paragraph -->
-        
-        <!-- wp:list -->
-        <ul>
-            <li>Item 1</li>
-            <li>Item 2</li>
-        </ul>
-        <!-- /wp:list -->
-    </div>
-    <!-- /wp:column -->
-    
-    <!-- wp:column -->
-    <div class="wp-block-column">
-        <!-- wp:heading {"level":3} -->
-        <h3>Column heading</h3>
-        <!-- /wp:heading -->
-    </div>
-    <!-- /wp:column -->
+	<!-- wp:column -->
+	<div class="wp-block-column">
+		<!-- wp:paragraph -->
+		<p>Valid column content</p>
+		<!-- /wp:paragraph -->
+		
+		<!-- wp:list -->
+		<ul>
+			<li>Item 1</li>
+			<li>Item 2</li>
+		</ul>
+		<!-- /wp:list -->
+	</div>
+	<!-- /wp:column -->
+	
+	<!-- wp:column -->
+	<div class="wp-block-column">
+		<!-- wp:heading {"level":3} -->
+		<h3>Column heading</h3>
+		<!-- /wp:heading -->
+	</div>
+	<!-- /wp:column -->
 </div>
 <!-- /wp:columns -->
 
 <!-- Column block outside of columns (invalid parent-child relationship) -->
 <!-- wp:column -->
 <div class="wp-block-column">
-    <!-- wp:paragraph -->
-    <p>This column has no parent columns block!</p>
-    <!-- /wp:paragraph -->
+	<!-- wp:paragraph -->
+	<p>This column has no parent columns block!</p>
+	<!-- /wp:paragraph -->
 </div>
 <!-- /wp:column -->
 
 <!-- Navigation link outside navigation block (invalid) -->
 <!-- wp:navigation-link {"label":"Home","url":"/"} -->
 <li class="wp-block-navigation-item">
-    <a class="wp-block-navigation-item__content" href="/"><span class="wp-block-navigation-item__label">Home</span></a>
+	<a class="wp-block-navigation-item__content" href="/"><span class="wp-block-navigation-item__label">Home</span></a>
 </li>
 <!-- /wp:navigation-link -->
 
 <!-- Deeply nested structure to test max depth -->
 <!-- wp:group -->
 <div class="wp-block-group">
-    <!-- wp:group -->
-    <div class="wp-block-group">
-        <!-- wp:group -->
-        <div class="wp-block-group">
-            <!-- wp:group -->
-            <div class="wp-block-group">
-                <!-- wp:group -->
-                <div class="wp-block-group">
-                    <!-- wp:group -->
-                    <div class="wp-block-group">
-                        <!-- wp:group -->
-                        <div class="wp-block-group">
-                            <!-- wp:group -->
-                            <div class="wp-block-group">
-                                <!-- wp:paragraph -->
-                                <p>8 levels deep!</p>
-                                <!-- /wp:paragraph -->
-                            </div>
-                            <!-- /wp:group -->
-                        </div>
-                        <!-- /wp:group -->
-                    </div>
-                    <!-- /wp:group -->
-                </div>
-                <!-- /wp:group -->
-            </div>
-            <!-- /wp:group -->
-        </div>
-        <!-- /wp:group -->
-    </div>
-    <!-- /wp:group -->
+	<!-- wp:group -->
+	<div class="wp-block-group">
+		<!-- wp:group -->
+		<div class="wp-block-group">
+			<!-- wp:group -->
+			<div class="wp-block-group">
+				<!-- wp:group -->
+				<div class="wp-block-group">
+					<!-- wp:group -->
+					<div class="wp-block-group">
+						<!-- wp:group -->
+						<div class="wp-block-group">
+							<!-- wp:group -->
+							<div class="wp-block-group">
+								<!-- wp:paragraph -->
+								<p>8 levels deep!</p>
+								<!-- /wp:paragraph -->
+							</div>
+							<!-- /wp:group -->
+						</div>
+						<!-- /wp:group -->
+					</div>
+					<!-- /wp:group -->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 
 <!-- Template locked pattern -->
 <!-- wp:group {"templateLock":"all"} -->
 <div class="wp-block-group">
-    <!-- wp:paragraph -->
-    <p>This content is locked</p>
-    <!-- /wp:paragraph -->
-    
-    <!-- wp:image {"id":123} -->
-    <figure class="wp-block-image">
-        <img src="image.jpg" alt="" />
-    </figure>
-    <!-- /wp:image -->
+	<!-- wp:paragraph -->
+	<p>This content is locked</p>
+	<!-- /wp:paragraph -->
+	
+	<!-- wp:image {"id":123} -->
+	<figure class="wp-block-image">
+		<img src="image.jpg" alt="" />
+	</figure>
+	<!-- /wp:image -->
 </div>
 <!-- /wp:group -->
 
 <!-- Invalid nesting: button inside button -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons">
-    <!-- wp:button -->
-    <div class="wp-block-button">
-        <a class="wp-block-button__link">
-            <!-- wp:button -->
-            <div class="wp-block-button">
-                <a class="wp-block-button__link">Nested button (invalid)</a>
-            </div>
-            <!-- /wp:button -->
-        </a>
-    </div>
-    <!-- /wp:button -->
+	<!-- wp:button -->
+	<div class="wp-block-button">
+		<a class="wp-block-button__link">
+			<!-- wp:button -->
+			<div class="wp-block-button">
+				<a class="wp-block-button__link">Nested button (invalid)</a>
+			</div>
+			<!-- /wp:button -->
+		</a>
+	</div>
+	<!-- /wp:button -->
 </div>
 <!-- /wp:buttons -->
 
 <!-- Query loop with post template -->
 <!-- wp:query {"queryId":0,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
 <div class="wp-block-query">
-    <!-- wp:post-template -->
-    <!-- wp:post-title /-->
-    <!-- wp:post-excerpt /-->
-    <!-- wp:post-date /-->
-    <!-- /wp:post-template -->
-    
-    <!-- wp:query-pagination -->
-    <!-- wp:query-pagination-previous /-->
-    <!-- wp:query-pagination-numbers /-->
-    <!-- wp:query-pagination-next /-->
-    <!-- /wp:query-pagination -->
+	<!-- wp:post-template -->
+	<!-- wp:post-title /-->
+	<!-- wp:post-excerpt /-->
+	<!-- wp:post-date /-->
+	<!-- /wp:post-template -->
+	
+	<!-- wp:query-pagination -->
+	<!-- wp:query-pagination-previous /-->
+	<!-- wp:query-pagination-numbers /-->
+	<!-- wp:query-pagination-next /-->
+	<!-- /wp:query-pagination -->
 </div>
 <!-- /wp:query -->
 
 <!-- Social links with invalid child -->
 <!-- wp:social-links -->
 <ul class="wp-block-social-links">
-    <!-- wp:social-link {"url":"https://twitter.com","service":"twitter"} /-->
-    <!-- wp:social-link {"url":"https://facebook.com","service":"facebook"} /-->
-    
-    <!-- wp:paragraph -->
-    <p>This paragraph shouldn't be inside social links!</p>
-    <!-- /wp:paragraph -->
+	<!-- wp:social-link {"url":"https://twitter.com","service":"twitter"} /-->
+	<!-- wp:social-link {"url":"https://facebook.com","service":"facebook"} /-->
+	
+	<!-- wp:paragraph -->
+	<p>This paragraph shouldn't be inside social links!</p>
+	<!-- /wp:paragraph -->
 </ul>
 <!-- /wp:social-links -->
 
 <!-- Missing InnerBlocks.Content in save -->
 <!-- wp:group -->
 <div class="wp-block-group">
-    <!-- This is missing the InnerBlocks content -->
+	<!-- This is missing the InnerBlocks content -->
 </div>
 <!-- /wp:group -->
 
 <!-- Circular nesting attempt (group > columns > column > group > columns) -->
 <!-- wp:group -->
 <div class="wp-block-group">
-    <!-- wp:columns -->
-    <div class="wp-block-columns">
-        <!-- wp:column -->
-        <div class="wp-block-column">
-            <!-- wp:group -->
-            <div class="wp-block-group">
-                <!-- wp:columns -->
-                <div class="wp-block-columns">
-                    <!-- wp:column -->
-                    <div class="wp-block-column">
-                        <!-- wp:paragraph -->
-                        <p>Complex nesting pattern</p>
-                        <!-- /wp:paragraph -->
-                    </div>
-                    <!-- /wp:column -->
-                </div>
-                <!-- /wp:columns -->
-            </div>
-            <!-- /wp:group -->
-        </div>
-        <!-- /wp:column -->
-    </div>
-    <!-- /wp:columns -->
+	<!-- wp:columns -->
+	<div class="wp-block-columns">
+		<!-- wp:column -->
+		<div class="wp-block-column">
+			<!-- wp:group -->
+			<div class="wp-block-group">
+				<!-- wp:columns -->
+				<div class="wp-block-columns">
+					<!-- wp:column -->
+					<div class="wp-block-column">
+						<!-- wp:paragraph -->
+						<p>Complex nesting pattern</p>
+						<!-- /wp:paragraph -->
+					</div>
+					<!-- /wp:column -->
+				</div>
+				<!-- /wp:columns -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
 </div>
 <!-- /wp:group -->
 
 <!-- Template with placeholders -->
 <!-- wp:group {"template":[["core/heading",{"placeholder":"Add heading..."}],["core/paragraph",{"placeholder":"Add content..."}]]} -->
 <div class="wp-block-group">
-    <!-- wp:heading -->
-    <h2>Add heading...</h2>
-    <!-- /wp:heading -->
-    
-    <!-- wp:paragraph -->
-    <p>Add content...</p>
-    <!-- /wp:paragraph -->
+	<!-- wp:heading -->
+	<h2>Add heading...</h2>
+	<!-- /wp:heading -->
+	
+	<!-- wp:paragraph -->
+	<p>Add content...</p>
+	<!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
