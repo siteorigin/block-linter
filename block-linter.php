@@ -240,10 +240,40 @@ class BlockLinter {
     private $errors = array();
     private $warnings = array();
     private $config = array();
+    private $customValidators = array();
+    private $postValidationCallbacks = array();
+    private static $libraryMode = false;
 
     public function __construct($config = array()) {
         $this->parser = new BlockParser();
         $this->config = array_merge($this->getDefaultConfig(), $config);
+    }
+    
+    /**
+     * Enable library mode to prevent CLI execution
+     */
+    public static function setLibraryMode($enabled = true) {
+        self::$libraryMode = $enabled;
+    }
+    
+    /**
+     * Register a custom validator function
+     * @param callable $validator Function that receives ($content, $blocks, $linter) and returns array of errors/warnings
+     */
+    public function addCustomValidator($validator) {
+        if (is_callable($validator)) {
+            $this->customValidators[] = $validator;
+        }
+    }
+    
+    /**
+     * Register a post-validation callback for content modification
+     * @param callable $callback Function that receives ($content, $errors, $warnings, $linter) and returns modified content
+     */
+    public function addPostValidationCallback($callback) {
+        if (is_callable($callback)) {
+            $this->postValidationCallbacks[] = $callback;
+        }
     }
 
     private function getDefaultConfig() {
@@ -353,8 +383,66 @@ class BlockLinter {
         if ($this->config['check_malformed_json']) {
             $this->checkMalformedJSON($content);
         }
+        
+        // Run custom validators
+        foreach ($this->customValidators as $validator) {
+            try {
+                $result = call_user_func($validator, $content, $blocks, $this);
+                if (is_array($result)) {
+                    if (isset($result['errors'])) {
+                        $this->errors = array_merge($this->errors, $result['errors']);
+                    }
+                    if (isset($result['warnings'])) {
+                        $this->warnings = array_merge($this->warnings, $result['warnings']);
+                    }
+                }
+            } catch (Exception $e) {
+                $this->errors[] = array(
+                    'type' => 'custom_validator_error',
+                    'message' => 'Custom validator failed: ' . $e->getMessage(),
+                    'source' => $source
+                );
+            }
+        }
+        
+        // Run post-validation callbacks (for content modification)
+        $modifiedContent = $content;
+        foreach ($this->postValidationCallbacks as $callback) {
+            try {
+                $result = call_user_func($callback, $modifiedContent, $this->errors, $this->warnings, $this);
+                if (is_string($result)) {
+                    $modifiedContent = $result;
+                }
+            } catch (Exception $e) {
+                $this->warnings[] = array(
+                    'type' => 'post_validation_callback_error',
+                    'message' => 'Post-validation callback failed: ' . $e->getMessage(),
+                    'source' => $source
+                );
+            }
+        }
 
         return empty($this->errors);
+    }
+    
+    /**
+     * Get the content after post-validation modifications
+     * @param string $content Original content
+     * @return string Modified content
+     */
+    public function getModifiedContent($content) {
+        $modifiedContent = $content;
+        foreach ($this->postValidationCallbacks as $callback) {
+            try {
+                $result = call_user_func($callback, $modifiedContent, $this->errors, $this->warnings, $this);
+                if (is_string($result)) {
+                    $modifiedContent = $result;
+                }
+            } catch (Exception $e) {
+                // Silently ignore callback errors in this context
+            }
+        }
+        return $modifiedContent;
     }
 
     private function validateBlocks($blocks, $depth, $parent_blocks = array()) {
@@ -701,7 +789,7 @@ class BlockLinter {
 }
 
 // CLI Interface
-if (php_sapi_name() === 'cli') {
+if (php_sapi_name() === 'cli' && !defined('BLOCK_LINTER_LIBRARY_MODE') && !BlockLinter::$libraryMode) {
     $options = getopt('f:c:vh', array('file:', 'config:', 'verbose', 'help'));
 
     if (isset($options['h']) || isset($options['help'])) {
