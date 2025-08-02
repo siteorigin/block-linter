@@ -1,0 +1,3 @@
+[submodule ".pre-commit"]
+	path = .pre-commit
+	url = git@github.com:siteorigin/siteorigin-pre-commit.git
