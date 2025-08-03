@@ -389,7 +389,7 @@ class BlockLinter {
 			'validate_context_usage' => true,
 			'check_malformed_json' => true,
 			'core_blocks' => array(
-				'core/paragraph', 'core/heading', 'core/list', 'core/quote',
+				'core/paragraph', 'core/heading', 'core/list', 'core/list-item', 'core/quote',
 				'core/image', 'core/gallery', 'core/video', 'core/audio',
 				'core/columns', 'core/column', 'core/group', 'core/button',
 				'core/buttons', 'core/separator', 'core/spacer', 'core/code',
@@ -787,7 +787,7 @@ class BlockLinter {
 
 			// Check if there's a corresponding opener before this position
 			$before_content = substr( $content, 0, $position );
-			$opener_pattern = '/<!-- wp:' . preg_quote( $block_name, '/' ) . '\s+(?:{[^}]*}\s+)?-->/';
+			$opener_pattern = '/<!-- wp:' . preg_quote( $block_name, '/' ) . '\s*(?:{.*?})?\s*-->/s';
 
 			if ( ! preg_match( $opener_pattern, $before_content ) ) {
 				$this->warnings[] = array(
